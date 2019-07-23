@@ -187,7 +187,7 @@
     |                 | MMFileMoved($old_path, $new_path)                  | get moved file/folder "old & new" [path][path]              |
 
 [js]: https://github.com/gocanto/vuemit
-[lara]: https://laravel.com/docs/5.5/events#manually-registering-events
+[lara]: https://laravel.com/docs/master/events#manually-registering-events
 [event]: https://github.com/ctf0/Laravel-Media-Manager/wiki/Image-Editor#optimize-edited-images-on-save
 [path]: https://gist.github.com/ctf0/9fa6013954654384052d2e2e809b9bf6
 [modal]: https://github.com/ctf0/Laravel-Media-Manager/wiki/Use-The-Manager-From-A-Modal
