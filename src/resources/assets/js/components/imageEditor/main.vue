@@ -322,14 +322,13 @@ export default {
             let cropper = this.imageCropper
             let getData = cropper.getData()
 
-            this.hasChanged =
+            this.hasChanged = (
                 getData.rotate != 0 ||
                 getData.scaleX != 1 ||
                 getData.scaleY != 1 ||
                 cropper.cropped ||
                 this.haveFilters()
-                    ? true
-                    : false
+            ) ? true : false
         },
         resetAll() {
             this.$nextTick(() => {
