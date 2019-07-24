@@ -1,6 +1,5 @@
 {{-- component --}}
 <media-manager inline-template v-cloak
-    class=""
     :config="{{ json_encode([
         'baseUrl' => $base_url,
         'hideFilesExt' => config('mediaManager.hide_files_ext'),
@@ -9,7 +8,8 @@
         'cacheExp' => config('mediaManager.cache_expires_after'),
         'broadcasting' => config('mediaManager.enable_broadcasting'),
         'gfi' => config('mediaManager.get_folder_info'),
-        'ratioBar' => config('mediaManager.show_ratio_bar')
+        'ratioBar' => config('mediaManager.show_ratio_bar'),
+        'previewFilesBeforeUpload' => config('mediaManager.preview_files_before_upload')
     ]) }}"
     :routes="{{ json_encode([
         'files' => route('media.files'),
@@ -90,12 +90,13 @@
                                     v-tippy
                                     title="u">
                                     <span class="icon"><icon name="shopping-basket"></icon></span>
-                                    <span>{{ trans('MediaManager::messages.upload.main') }}</span>
+                                    <span v-if="waitingForUpload">{{ trans('MediaManager::messages.add.more') }}</span>
+                                    <span v-else>{{ trans('MediaManager::messages.upload.main') }}</span>
                                 </button>
                             </div>
 
                             {{-- new folder --}}
-                            <div class="control" v-if="!restrictModeIsOn()">
+                            <div class="control" v-if="!restrictModeIsOn() && !waitingForUpload">
                                 <button class="button"
                                     :disabled="isLoading"
                                     @click="createNewFolder()">
@@ -107,7 +108,7 @@
                     </div>
 
                     {{-- middle --}}
-                    <div class="level-item">
+                    <div class="level-item" v-if="!waitingForUpload">
                         <div class="field has-addons">
                             {{-- move --}}
                             <div class="control" v-if="!restrictModeIsOn()">
@@ -162,7 +163,7 @@
                     </div>
 
                     {{-- last --}}
-                    <div class="level-item">
+                    <div class="level-item" v-if="!waitingForUpload">
                         <div class="field has-addons">
                             {{-- refresh --}}
                             <div class="control" v-if="!isBulkSelecting()">
@@ -216,7 +217,7 @@
                 {{-- ====================================================================== --}}
 
                 {{-- right toolbar --}}
-                <div class="level-right">
+                <div class="level-right" v-if="!waitingForUpload">
                     <div class="level-item">
                         <div class="field" :class="{'has-addons' : isBulkSelecting()}">
                             {{-- bulk select all --}}
@@ -401,8 +402,10 @@
                                     <p class="control">
                                         <button class="button is-black" :disabled="!searchFor"
                                             v-tippy
-                                            title="{{ trans('MediaManager::messages.clear', ['attr' => trans('MediaManager::messages.search.main')]) }}"
-                                            @click="resetInput('searchFor')" >
+                                            title="{{ trans('MediaManager::messages.clear', [
+                                                'attr' => trans('MediaManager::messages.search.main')])
+                                            }}"
+                                            @click="resetInput('searchFor')">
                                             <span class="icon"><icon name="times"></icon></span>
                                         </button>
                                     </p>
@@ -443,8 +446,6 @@
                         </span>
                     </div>
                 </div>
-
-                <div id="uploadPreview"></div>
             </div>
 
             <transition name="mm-list">
@@ -463,6 +464,25 @@
 
         <div class="media-manager__stack">
             <section class="__stack-container">
+
+                {{-- upload preview --}}
+                <div id="uploadPreview">
+                    <div class="dz-preview-ops">
+                        <button v-tippy="{arrow: true, hideOnClick: false}"
+                                title="{{ trans('MediaManager::messages.clear', ['attr'=>null]) }}"
+                                id="clear-dropzone"
+                                ref="clear-dropzone"
+                                class="btn-plain">
+                            <span class="icon is-large"><icon name="times" scale="1.2"/></span>
+                        </button>
+                        <button v-tippy="{arrow: true, hideOnClick: false}"
+                                title="{{ trans('MediaManager::messages.upload.main') }}"
+                                id="process-dropzone"
+                                class="btn-plain">
+                            <span class="icon is-large"><icon name="check" scale="1.2"/></span>
+                        </button>
+                    </div>
+                </div>
 
                 {{-- loadings --}}
                 <section>
@@ -955,7 +975,7 @@
                 </div>
 
                 {{-- toggle sidebar --}}
-                <div class="level-right" v-show="!isLoading">
+                <div class="level-right" v-show="!isLoading && !waitingForUpload">
                     <div class="is-hidden-touch"
                         @click="toggleInfoSidebar(), saveUserPref()"
                         v-tippy

@@ -105,6 +105,8 @@ class MediaManagerServiceProvider extends ServiceProvider
             $patterns = collect(
                 $this->file->allFiles($pattern_path)
             )->map(function ($item) {
+                $name = str_replace('\\', '/', $item->getPathName());
+
                 return preg_replace('/.*\/patterns/', '/assets/vendor/MediaManager/patterns', $item->getPathName());
             });
 

@@ -205,6 +205,8 @@ export default {
                     'pointer-events': 'none'
                 }
             }
+
+            return {}
         }
     },
     created() {

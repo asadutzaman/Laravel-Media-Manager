@@ -94,6 +94,7 @@ export default {
             smallScreen: false,
             toolBar: true,
             UploadArea: false,
+            waitingForUpload: false,
             useCopy: false,
 
             activeModal: null,
@@ -310,6 +311,12 @@ export default {
                                 // clear filter
                                 if (this.currentFilterName) {
                                     this.showFilesOfType('all')
+                                }
+
+                                // clear upload queue
+                                if (this.config.previewFilesBeforeUpload) {
+                                    this.$refs['clear-dropzone'].click()
+                                    this.waitingForUpload = false
                                 }
                             }
                         }
