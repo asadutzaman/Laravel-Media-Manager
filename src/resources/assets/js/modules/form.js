@@ -22,10 +22,19 @@ export default {
 
                         this.on("addedfile", (file) => {
                             manager.waitingForUpload = true
+                            manager.UploadArea = false
 
                             file.previewElement.classList.add('is-hidden')
                             previewContainer.classList.add('show')
-                            manager.UploadArea = false
+
+                            // get around https://www.dropzonejs.com/#config-maxThumbnailFilesize
+                            if (!file.dataURL) {
+                                let img = file.previewElement.querySelector('img')
+                                img.src = "//www.usedmachinesusa.dmgmori.com/images/noPreview.jpg"
+                                img.style.height = '120px'
+                                img.style.width = '120px'
+                                file.previewElement.classList.remove('is-hidden')
+                            }
                         })
 
                         this.on("thumbnail", (file, dataUrl) => {
@@ -88,10 +97,10 @@ export default {
 
                     sending = false
                 },
-                errormultiple(file, res) {
+                errormultiple: function (file, res) {
                     file = Array.isArray(file) ? file[0] : file
                     manager.showNotif(`"${file.name}" ${res}`, 'danger')
-                    // this.removeFile(file)
+                    this.removeFile(file)
                 },
                 queuecomplete() {
                     if (!sending) {

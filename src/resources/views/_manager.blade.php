@@ -1,5 +1,6 @@
 {{-- component --}}
 <media-manager inline-template v-cloak
+    class='hide-native-scrollbar'
     :config="{{ json_encode([
         'baseUrl' => $base_url,
         'hideFilesExt' => config('mediaManager.hide_files_ext'),
