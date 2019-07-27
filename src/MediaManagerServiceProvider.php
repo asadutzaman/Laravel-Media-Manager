@@ -93,8 +93,8 @@ class MediaManagerServiceProvider extends ServiceProvider
         // base url
         $config = $this->app['config']->get('mediaManager');
         $url    = $this->app['filesystem']
-            ->disk(array_get($config, 'storage_disk'))
-            ->url('/');
+                    ->disk($config['storage_disk'])
+                    ->url('/');
 
         $data['base_url'] = preg_replace('/\/+$/', '/', $url);
 
