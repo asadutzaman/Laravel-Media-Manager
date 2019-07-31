@@ -40,7 +40,7 @@ trait Utils
     {
         $info = $this->storageDiskInfo;
         $url  = $this->resolveUrl($path); // get the file url
-        $root = $info['root'];
+        $root = $info['root'] ?? null;
 
         // for other disks without root ex."cloud"
         if (!$root) {

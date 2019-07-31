@@ -20,7 +20,7 @@ export default {
                     init: function () {
                         let previewContainer = document.querySelector(uploadPreview)
 
-                        this.on("addedfile", (file) => {
+                        this.on('addedfile', (file) => {
                             manager.waitingForUpload = true
                             manager.UploadArea = false
 
@@ -30,24 +30,24 @@ export default {
                             // get around https://www.dropzonejs.com/#config-maxThumbnailFilesize
                             if (!file.dataURL) {
                                 let img = file.previewElement.querySelector('img')
-                                img.src = "//www.usedmachinesusa.dmgmori.com/images/noPreview.jpg"
+                                img.src = '//www.usedmachinesusa.dmgmori.com/images/noPreview.jpg'
                                 img.style.height = '120px'
                                 img.style.width = '120px'
                                 file.previewElement.classList.remove('is-hidden')
                             }
                         })
 
-                        this.on("thumbnail", (file, dataUrl) => {
+                        this.on('thumbnail', (file, dataUrl) => {
                             file.previewElement.classList.remove('is-hidden')
                         })
 
                         // reset dz
-                        document.querySelector("#clear-dropzone").addEventListener("click", () => {
+                        document.querySelector('#clear-dropzone').addEventListener('click', () => {
                             this.removeAllFiles()
                             previewContainer.classList.remove('show')
                         })
                         // start the upload
-                        document.querySelector("#process-dropzone").addEventListener("click", () => {
+                        document.querySelector('#process-dropzone').addEventListener('click', () => {
                             this.processQueue()
                             previewContainer.classList.remove('show')
                             manager.$nextTick(() => {
@@ -144,7 +144,7 @@ export default {
                     path: this.files.path,
                     url: url,
                     random_names: this.randomNames
-                }).then(({ data }) => {
+                }).then(({data}) => {
                     this.toggleLoading()
                     this.loadingFiles('hide')
 
@@ -207,7 +207,7 @@ export default {
                     return axios.post(this.routes.files, {
                         folder: folders,
                         dirs: this.folders
-                    }).then(({ data }) => {
+                    }).then(({data}) => {
                         // folder doesnt exist
                         if (data.error) {
                             return this.showNotif(data.error, 'danger')
@@ -238,7 +238,7 @@ export default {
         updateDirsList() {
             axios.post(this.routes.dirs, {
                 folder_location: this.folders
-            }).then(({ data }) => {
+            }).then(({data}) => {
                 this.dirsListCheck(data)
             }).catch((err) => {
                 console.error(err)
@@ -331,7 +331,7 @@ export default {
             axios.post(event.target.action, {
                 path: path,
                 new_folder_name: folder_name
-            }).then(({ data }) => {
+            }).then(({data}) => {
                 this.toggleLoading()
                 this.toggleModal()
                 this.resetInput('newFolderName')
@@ -377,7 +377,7 @@ export default {
                 filename: filename,
                 new_filename: newFilename,
                 type: selected.type
-            }).then(({ data }) => {
+            }).then(({data}) => {
                 this.toggleLoading()
                 this.toggleModal()
 
@@ -392,7 +392,7 @@ export default {
 
                 let savedName = data.new_filename
 
-                this.showNotif(`${this.trans('rename_success')} "${filename}"to"${savedName}"`)
+                this.showNotif(`${this.trans('rename_success')} "${filename}" to "${savedName}"`)
                 selected.name = savedName
                 selected.path = selected.path.replace(filename, savedName)
 
@@ -436,7 +436,7 @@ export default {
                     destination: destination,
                     moved_files: files,
                     use_copy: copy
-                }).then(({ data }) => {
+                }).then(({data}) => {
                     this.toggleLoading()
                     this.toggleModal()
 
@@ -450,12 +450,12 @@ export default {
 
                         // copy
                         if (copy) {
-                            this.showNotif(`${this.trans('copy_success')} "${item.name}"to"${destination}"`)
+                            this.showNotif(`${this.trans('copy_success')} "${item.name}" to "${destination}"`)
                         }
 
                         // move
                         else {
-                            this.showNotif(`${this.trans('move_success')} "${item.name}"to"${destination}"`)
+                            this.showNotif(`${this.trans('move_success')} "${item.name}" to "${destination}"`)
                             this.removeFromLists(item.name, item.type)
 
                             // update dirs list after move
@@ -517,7 +517,7 @@ export default {
             axios.post(event.target.action, {
                 path: this.files.path,
                 deleted_files: files
-            }).then(({ data }) => {
+            }).then(({data}) => {
                 this.toggleLoading()
                 this.toggleModal()
 
