@@ -135,60 +135,61 @@
 
     <br>
 
-| navigation           | button                                                      | keyboard         | click / tap                  | touch                           |
-| -------------------- | ----------------------------------------------------------- | ---------------- | ---------------------------- | ------------------------------- |
-|                      | toggle upload panel *(toolbar)*                             | u                |                              |                                 |
-|                      | refresh *(toolbar)*                                         | r                | hold *(clear cache)*         | pinch in *(items container)*    |
-|                      | move *(toolbar)*                                            | m                |                              |                                 |
-|                      | image editor *(toolbar)*                                    | e                |                              |                                 |
-|                      | delete *(toolbar)*                                          | d / del          |                              |                                 |
-|                      | lock/unlock *(toolbar)*                                     | l                | hold *(anything but images)* |                                 |
-|                      | change visibility *(toolbar)*                               | v                |                              |                                 |
-|                      | toggle bulk selection *(toolbar)*                           | b                |                              |                                 |
-|                      | (reset) bulk select all *(toolbar)*                         | a                |                              |                                 |
-|                      | toggle sidebar *(path bar)*                                 | t                | *                            | swipe left/right *(sidebar)*    |
-|                      | confirm *(modal)*                                           | enter            |                              |                                 |
-|                      | toggle preview image/pdf/text *(item)*                      | space            | **                           |                                 |
-|                      | play/pause media *(item)*                                   | space            | **                           |                                 |
-|                      | hide (modal / upload-panel / global-search)                 | esc              |                              |                                 |
-|                      | reset (search / bulk selection / filter)                    | esc              |                              |                                 |
-|                      | reset upload preview [(if showpreview was on)][showPreview] | esc              |                              |                                 |
-|                      | &nbsp;                                                      |                  |                              |                                 |
-|                      | move *(item)*                                               |                  |                              | swipe up                        |
-|                      | delete *(item)*                                             |                  |                              | swipe down                      |
-|                      | rename *(item)*                                             |                  |                              | swipe left                      |
-|                      | image editor *(item)*                                       |                  | hold                         |                                 |
-|                      | limit bulk select *(item)*                                  | shift + click    |                              |                                 |
-|                      | current + next bulk select *(item)*                         | alt/meta + click |                              |                                 |
-|                      | create new folder                                           |                  | ** *(items container)*       |                                 |
-|                      | &nbsp;                                                      |                  |                              |                                 |
-| go to next *(item)*  |                                                             | right            | *                            | swipe left  *(preview)*         |
-| go to prev *(item)*  |                                                             | left             | *                            | swipe right *(preview)*         |
-| go to first *(item)* |                                                             | home             |                              |                                 |
-| go to last *(item)*  |                                                             | end              |                              |                                 |
-| go to next *(row)*   |                                                             | down             |                              | swipe up *(preview)*            |
-| go to prev *(row)*   |                                                             | up               |                              | swipe down *(preview)*          |
-| open folder          |                                                             | enter            | **                           |                                 |
-| go to prev *(dir)*   | folderName *(path bar)*                                     | backspace        | *                            | swipe right *(items container)* |
+| navigation           | button                                               | keyboard         | click / tap                  | touch                           |
+| -------------------- | ---------------------------------------------------- | ---------------- | ---------------------------- | ------------------------------- |
+|                      | toggle upload panel *(toolbar)*                      | u                |                              |                                 |
+|                      | refresh *(toolbar)*                                  | r                | hold *(clear cache)*         | pinch in *(items container)*    |
+|                      | move *(toolbar)*                                     | m                |                              |                                 |
+|                      | image editor *(toolbar)*                             | e                |                              |                                 |
+|                      | delete *(toolbar)*                                   | d / del          |                              |                                 |
+|                      | lock/unlock *(toolbar)*                              | l                | hold *(anything but images)* |                                 |
+|                      | change visibility *(toolbar)*                        | v                |                              |                                 |
+|                      | toggle bulk selection *(toolbar)*                    | b                |                              |                                 |
+|                      | (reset) bulk select all *(toolbar)*                  | a                |                              |                                 |
+|                      | toggle sidebar *(path bar)*                          | t                | *                            | swipe left/right *(sidebar)*    |
+|                      | confirm *(modal)*                                    | enter            |                              |                                 |
+|                      | toggle preview image/pdf/text *(item)*               | space            | **                           |                                 |
+|                      | play/pause media *(item)*                            | space            | **                           |                                 |
+|                      | hide (modal / upload-panel / global-search)          | esc              |                              |                                 |
+|                      | reset (search / bulk selection / filter)             | esc              |                              |                                 |
+|                      | reset upload [(if showpreview is on)][showPreview]   | esc              |                              |                                 |
+|                      | confirm upload [(if showpreview is on)][showPreview] | enter            |                              |                                 |
+|                      | &nbsp;                                               |                  |                              |                                 |
+|                      | move *(item)*                                        |                  |                              | swipe up                        |
+|                      | delete *(item)*                                      |                  |                              | swipe down                      |
+|                      | rename *(item)*                                      |                  |                              | swipe left                      |
+|                      | image editor *(item)*                                |                  | hold                         |                                 |
+|                      | limit bulk select *(item)*                           | shift + click    |                              |                                 |
+|                      | current + next bulk select *(item)*                  | alt/meta + click |                              |                                 |
+|                      | create new folder                                    |                  | ** *(items container)*       |                                 |
+|                      | &nbsp;                                               |                  |                              |                                 |
+| go to next *(item)*  |                                                      | right            | *                            | swipe left  *(preview)*         |
+| go to prev *(item)*  |                                                      | left             | *                            | swipe right *(preview)*         |
+| go to first *(item)* |                                                      | home             |                              |                                 |
+| go to last *(item)*  |                                                      | end              |                              |                                 |
+| go to next *(row)*   |                                                      | down             |                              | swipe up *(preview)*            |
+| go to prev *(row)*   |                                                      | up               |                              | swipe down *(preview)*          |
+| open folder          |                                                      | enter            | **                           |                                 |
+| go to prev *(dir)*   | folderName *(path bar)*                              | backspace        | *                            | swipe right *(items container)* |
 
 <br>
 
 ## Events
 
-    |       type      |                     event-name                     |                         description                         |
-    |-----------------|----------------------------------------------------|-------------------------------------------------------------|
-    | [JS][js]        |                                                    |                                                             |
-    |                 | modal-show                                         | when modal is showen                                        |
-    |                 | modal-hide                                         | when modal is hidden                                        |
-    |                 | file_selected *([when inside modal][modal])*       | get selected file url                                       |
-    |                 | multi_file_selected *([when inside modal][modal])* | get bulk selected files urls                                |
-    |                 | folder_selected *([when inside modal][modal])*     | get selected folder path                                    |
-    | [Laravel][lara] |                                                    |                                                             |
-    |                 | MMFileUploaded($file_path, $mime_type)             | get uploaded file full [path][path] & mime type             |
-    |                 | [MMFileSaved][event]($file_path, $mime_type)       | get saved (edited/link) image full [path][path] & mime type |
-    |                 | MMFileDeleted($file_path, $is_folder)              | get deleted file/folder full [path][path]                   |
-    |                 | MMFileRenamed($old_path, $new_path)                | get renamed file/folder "old & new" [path][path]            |
-    |                 | MMFileMoved($old_path, $new_path)                  | get moved file/folder "old & new" [path][path]              |
+|       type      |                     event-name                     |                         description                         |
+|-----------------|----------------------------------------------------|-------------------------------------------------------------|
+| [JS][js]        |                                                    |                                                             |
+|                 | modal-show                                         | when modal is showen                                        |
+|                 | modal-hide                                         | when modal is hidden                                        |
+|                 | file_selected *([when inside modal][modal])*       | get selected file url                                       |
+|                 | multi_file_selected *([when inside modal][modal])* | get bulk selected files urls                                |
+|                 | folder_selected *([when inside modal][modal])*     | get selected folder path                                    |
+| [Laravel][lara] |                                                    |                                                             |
+|                 | MMFileUploaded($file_path, $mime_type)             | get uploaded file full [path][path] & mime type             |
+|                 | [MMFileSaved][event]($file_path, $mime_type)       | get saved (edited/link) image full [path][path] & mime type |
+|                 | MMFileDeleted($file_path, $is_folder)              | get deleted file/folder full [path][path]                   |
+|                 | MMFileRenamed($old_path, $new_path)                | get renamed file/folder "old & new" [path][path]            |
+|                 | MMFileMoved($old_path, $new_path)                  | get moved file/folder "old & new" [path][path]              |
 
 [js]: https://github.com/gocanto/vuemit
 [lara]: https://laravel.com/docs/master/events#manually-registering-events
@@ -222,7 +223,7 @@ return [
     /*
      * remove any file special chars except
      */
-    'allowed_fileNames_chars' => '.\_\-\'\s\(\)\,',
+    'allowed_fileNames_chars' => '.\_\-\'\s\(\)\, ',
 
     /*
      * remove any folder special chars except (_ -)
