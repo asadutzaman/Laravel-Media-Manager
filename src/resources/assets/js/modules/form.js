@@ -4,13 +4,16 @@ export default {
     methods: {
         /*                Upload                */
         fileUpload() {
-            let last = null
+            let uploaded = 0
+            let allFiles = 0
+            let uploadProgress = 0
+
             let manager = this
-            let sending = false
+            let last = null
             let clearCache = false
             let uploadPreview = '#uploadPreview'
             let uploadsize = this.restrict.uploadsize ? this.restrict.uploadsize : 256
-            let uploadTypes = this.restrict.uploadTypes ? this.restrict.uploadTypes.join(',') : null
+            let uploadTypes = this.restrict.uploadTypes ? this.restrict.uploadTypes.join(', ') : null
             let autoProcess = this.config.previewFilesBeforeUpload
                 ? {
                     autoProcessQueue: false,
@@ -20,9 +23,23 @@ export default {
                     init: function () {
                         let previewContainer = document.querySelector(uploadPreview)
 
+                        window.addEventListener('beforeunload', (event) => {
+                            alert('what')
+                            if (manager.showProgress && confirm('Current Upload Will Be Canceld !!')) {
+                                this.removeAllFiles(true)
+                            }
+                        })
+
+                        this.on('removedfile', (file) => {
+                            if (!this.files.length) {
+                                manager.clearUploadPreview(previewContainer)
+                            }
+                        })
+
                         this.on('addedfile', (file) => {
-                            manager.waitingForUpload = true
                             manager.UploadArea = false
+                            manager.toolBar = false
+                            manager.waitingForUpload = true
 
                             file.previewElement.classList.add('is-hidden')
                             previewContainer.classList.add('show')
@@ -30,9 +47,9 @@ export default {
                             // get around https://www.dropzonejs.com/#config-maxThumbnailFilesize
                             if (!file.dataURL) {
                                 let img = file.previewElement.querySelector('img')
-                                img.src = '//www.usedmachinesusa.dmgmori.com/images/noPreview.jpg'
-                                img.style.height = '120px'
-                                img.style.width = '120px'
+                                img.src = './assets/vendor/MediaManager/noPreview.jpg'
+                                img.style.height = '7rem'
+                                img.style.width = '7rem'
                                 file.previewElement.classList.remove('is-hidden')
                             }
                         })
@@ -42,17 +59,14 @@ export default {
                         })
 
                         // reset dz
-                        document.querySelector('#clear-dropzone').addEventListener('click', () => {
+                        manager.$refs['clear-dropzone'].addEventListener('click', () => {
                             this.removeAllFiles()
-                            previewContainer.classList.remove('show')
+                            manager.clearUploadPreview(previewContainer)
                         })
                         // start the upload
-                        document.querySelector('#process-dropzone').addEventListener('click', () => {
+                        manager.$refs['process-dropzone'].addEventListener('click', () => {
                             this.processQueue()
-                            previewContainer.classList.remove('show')
-                            manager.$nextTick(() => {
-                                manager.waitingForUpload = false
-                            })
+                            manager.clearUploadPreview(previewContainer)
                         })
                     }
                 }
@@ -73,19 +87,28 @@ export default {
                 timeout: 3600000, // 60 mins
                 autoProcessQueue: true,
                 previewsContainer: uploadPreview,
-                processingmultiple() {
-                    manager.showProgress = true
+                accept: function (file, done) {
+                    if (this.getUploadingFiles().length) {
+                        return done(manager.trans('upload_in_progress'))
+                    }
+
+                    allFiles++
+                    done()
                 },
-                sending(file, xhr, formData) {
-                    sending = true
+                sending: function (file, xhr, formData) {
+                    uploadProgress += parseFloat(100 / allFiles)
+                    manager.progressCounter = `${Math.round(uploadProgress)}%`
+
                     formData.append('upload_path', manager.files.path)
                     formData.append('random_names', manager.randomNames)
                 },
-                totaluploadprogress(uploadProgress) {
-                    manager.progressCounter = `${Math.round(uploadProgress)}%`
+                processingmultiple() {
+                    manager.showProgress = true
                 },
                 successmultiple(files, res) {
                     res.map((item) => {
+                        uploaded++
+
                         if (item.success) {
                             clearCache = true
                             last = item.file_name
@@ -94,16 +117,17 @@ export default {
                             manager.showNotif(item.message, 'danger')
                         }
                     })
-
-                    sending = false
                 },
-                errormultiple: function (file, res) {
+                errormultiple(file, res) {
                     file = Array.isArray(file) ? file[0] : file
                     manager.showNotif(`"${file.name}" ${res}`, 'danger')
                     this.removeFile(file)
                 },
-                queuecomplete() {
-                    if (!sending) {
+                queuecomplete: function () {
+                    console.log(uploaded, this.files.length)
+
+                    if (uploaded == this.files.length) {
+                        manager.progressCounter = '100%'
                         manager.hideProgress()
 
                         if (clearCache) {
@@ -125,6 +149,13 @@ export default {
             new Dropzone('.__stack-container', Object.assign(options, {
                 clickable: false
             }))
+        },
+        clearUploadPreview(previewContainer) {
+            previewContainer.classList.remove('show')
+            this.$nextTick(() => {
+                this.waitingForUpload = false
+                this.toolBar = true
+            })
         },
 
         // upload image from link
@@ -392,7 +423,7 @@ export default {
 
                 let savedName = data.new_filename
 
-                this.showNotif(`${this.trans('rename_success')} "${filename}" to "${savedName}"`)
+                this.showNotif(`${this.trans('rename_success')} "${filename}"to"${savedName}"`)
                 selected.name = savedName
                 selected.path = selected.path.replace(filename, savedName)
 
@@ -450,12 +481,12 @@ export default {
 
                         // copy
                         if (copy) {
-                            this.showNotif(`${this.trans('copy_success')} "${item.name}" to "${destination}"`)
+                            this.showNotif(`${this.trans('copy_success')} "${item.name}"to"${destination}"`)
                         }
 
                         // move
                         else {
-                            this.showNotif(`${this.trans('move_success')} "${item.name}" to "${destination}"`)
+                            this.showNotif(`${this.trans('move_success')} "${item.name}"to"${destination}"`)
                             this.removeFromLists(item.name, item.type)
 
                             // update dirs list after move

@@ -36,7 +36,7 @@ class MediaManagerServiceProvider extends ServiceProvider
 
         // database
         $this->publishes([
-            __DIR__ . '/database' => storage_path('logs'),
+            __DIR__ . '/database/MediaManager.sqlite' => database_path('MediaManager.sqlite'),
         ], 'db');
 
         $this->publishes([
@@ -64,7 +64,7 @@ class MediaManagerServiceProvider extends ServiceProvider
     protected function extraConfigs()
     {
         // database
-        $db = storage_path('logs/MediaManager.sqlite');
+        $db = database_path('MediaManager.sqlite');
 
         if ($this->file->exists($db)) {
             $this->app['config']->set('database.connections.mediamanager', [
@@ -107,7 +107,7 @@ class MediaManagerServiceProvider extends ServiceProvider
             )->map(function ($item) {
                 $name = str_replace('\\', '/', $item->getPathName());
 
-                return preg_replace('/.*\/patterns/', '/assets/vendor/MediaManager/patterns', $item->getPathName());
+                return preg_replace('/.*\/patterns/', '/assets/vendor/MediaManager/patterns', $name);
             });
 
             $data['patterns'] = json_encode($patterns);

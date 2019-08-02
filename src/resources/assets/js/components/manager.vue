@@ -164,6 +164,8 @@ export default {
                     ? this.noScroll('add')
                     : this.noScroll('remove')
             }
+
+            this.firstRun = false
         }
     }, 250),
     beforeDestroy() {
@@ -241,7 +243,7 @@ export default {
 
             if (!(this.isLoading || e.altKey || e.ctrlKey || e.metaKey || this.disableShortCuts)) {
                 // when modal isnt visible
-                if (!this.activeModal) {
+                if (!this.activeModal && !this.waitingForUpload) {
                     // when search is not focused
                     if (!this.isFocused('search', e)) {
                         // when no bulk selecting
@@ -312,12 +314,6 @@ export default {
                                 if (this.currentFilterName) {
                                     this.showFilesOfType('all')
                                 }
-
-                                // clear upload queue
-                                if (this.config.previewFilesBeforeUpload) {
-                                    this.$refs['clear-dropzone'].click()
-                                    this.waitingForUpload = false
-                                }
                             }
                         }
                         /* end of no bulk selection */
@@ -381,6 +377,29 @@ export default {
                     }
                 }
                 /* end of modal isnt visible */
+
+                // when upload preview visible
+                if (this.waitingForUpload) {
+                    // procced with upload
+                    if (key == 'enter') {
+                        this.$refs['process-dropzone'].click()
+                    }
+
+                    // clear upload queue
+                    if (key == 'esc') {
+                        if (this.UploadArea) {
+                            return this.toggleUploadPanel()
+                        }
+
+                        this.$refs['clear-dropzone'].click()
+                        this.waitingForUpload = false
+                    }
+
+                    // trigger upload panel
+                    if (key == 'u') {
+                        this.$refs.upload.click()
+                    }
+                }
 
                 // when modal is visible
                 else {

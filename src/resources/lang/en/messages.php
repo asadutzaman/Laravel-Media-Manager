@@ -145,6 +145,7 @@ return [
         'success'           => 'Successfully Uploaded',
         'text'              => 'Drag & Drop Files<br>Or<br>Click To Upload',
         'use_random_names'  => 'Use Random Names ?',
+        'in_progress'       => 'Upload Is Already In Progress',
     ],
     'video'         => 'Video',
     'video_support' => 'Your Browser Does Not Support The Video Tag',
