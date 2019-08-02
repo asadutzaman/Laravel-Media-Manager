@@ -171,6 +171,8 @@
 | open folder          |                                                             | enter            | **                           |                                 |
 | go to prev *(dir)*   | folderName *(path bar)*                                     | backspace        | *                            | swipe right *(items container)* |
 
+<br>
+
 ## Events
 
     |       type      |                     event-name                     |                         description                         |
