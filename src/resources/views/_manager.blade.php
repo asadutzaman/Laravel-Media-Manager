@@ -52,7 +52,7 @@
     :user-id="{{ config('mediaManager.enable_broadcasting') ? auth()->user()->id : 0 }}"
     :upload-panel-img-list="{{ $patterns ?? '[]' }}">
 
-    <div class="">
+    <div class="" :class="{'__stack-reverse': waitingForUpload}">
 
         {{-- content ratio bar --}}
         <transition name="mm-list" mode="out-in">
@@ -464,7 +464,7 @@
         {{-- ====================================================================== --}}
 
         <div class="media-manager__stack">
-            <section class="__stack-container">
+            <section class="__stack-container" :class="{'more-height': waitingForUpload}">
 
                 {{-- upload preview --}}
                 <div id="uploadPreview">
@@ -506,9 +506,13 @@
                             </span>
                         </button>
                     </div>
+                    <div class="sidebar-container">
+                        <div class="sidebar"></div>
+                    </div>
+                    <div class="preview">
+                        <img :src="selectedUploadPreview.img" alt="" v-if="selectedUploadPreview">
+                    </div>
                 </div>
-
-                <div class="__stack-loading"></div>
 
                 {{-- loadings --}}
                 <section>
@@ -1060,6 +1064,7 @@
                 <v-touch class="modal-background link" @dbltap="toggleModal()"></v-touch>
                 <div class="mm-animated fadeInDown __modal-content-wrapper">
                     <image-editor route="{{ route('media.uploadCropped') }}"
+                        :no-scroll="noScroll"
                         :file="selectedFile"
                         :url="selectedFilePreview"
                         :translations="{{ json_encode([

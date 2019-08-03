@@ -149,6 +149,7 @@ export default {
     },
     props: [
         'file',
+        'noScroll',
         'translations',
         'route',
         'url'
@@ -210,6 +211,7 @@ export default {
         }
     },
     created() {
+        this.noScroll('add')
         window.addEventListener('dblclick', this.onDblClick)
     },
     mounted() {
@@ -219,6 +221,7 @@ export default {
     beforeDestroy() {
         window.removeEventListener('dblclick', this.onDblClick)
         this.imageCropper.destroy()
+        this.noScroll('remove')
     },
     methods: {
         // init

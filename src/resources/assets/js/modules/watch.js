@@ -132,6 +132,14 @@ export default {
                 this.smallScreenHelper()
             }
         },
+        // drop zone file preview
+        selectedUploadPreviewList(val) {
+            if (val) {
+                document.querySelectorAll('#uploadPreview img').forEach((img) => {
+                    img.addEventListener('click', this.changeUploadPreviewFile)
+                })
+            }
+        },
 
         // misc
         infoSidebar: {

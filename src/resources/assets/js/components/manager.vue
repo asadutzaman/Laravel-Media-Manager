@@ -21,6 +21,7 @@ import Restriction from '../modules/restriction'
 import Scroll from '../modules/scroll'
 import Selection from '../modules/selection'
 import Url from '../modules/url'
+import Upload from '../modules/upload'
 import Utilities from '../modules/utils'
 import Watchers from '../modules/watch'
 
@@ -57,6 +58,7 @@ export default {
         Scroll,
         Selection,
         Url,
+        Upload,
         Utilities,
         Watchers
     ],
@@ -104,11 +106,6 @@ export default {
             moveToPath: null,
             newFilename: null,
             newFolderName: null,
-            player: {
-                item: null,
-                fs: false,
-                playing: false
-            },
             searchFor: null,
             searchItemsCount: null,
             selectedFile: null,
@@ -121,6 +118,18 @@ export default {
             files: [],
             filterdList: [],
             folders: [],
+            selectedUploadPreviewList: [],
+            selectedUploadPreview: {
+                img: null,
+                index: 0,
+                width: 0,
+                height: 0
+            },
+            player: {
+                item: null,
+                fs: false,
+                playing: false
+            },
             scrollableBtn: {
                 state: false,
                 dir: 'down'
@@ -139,6 +148,20 @@ export default {
         }
     },
     created() {
+        // confirm file pending upload cancel
+        window.addEventListener('beforeunload', (event) => {
+            if (this.showProgress) {
+                event.preventDefault()
+                event.returnValue = 'Current Upload Will Be Canceld !!'
+            }
+        })
+        window.addEventListener('unload', (event) => {
+            if (this.showProgress) {
+                EventHub.fire('clear-pending-upload')
+            }
+        })
+
+        // rest
         window.addEventListener('resize', this.onResize)
         window.addEventListener('popstate', this.urlNavigation)
         document.addEventListener('keydown', this.shortCuts)
