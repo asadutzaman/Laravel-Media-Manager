@@ -1,6 +1,5 @@
 <template>
     <div ref="editor" class="card __editor">
-
         <!-- btns -->
         <div class="top">
             <div class="__top-toolbar">
@@ -13,8 +12,8 @@
                              :caman-filters="camanFilters"
                              class="__left-index"/>
 
-                             <!-- glitch -->
-                             <!-- <glitch v-if="showGlitch"
+                    <!-- glitch -->
+                    <!-- <glitch v-if="showGlitch"
                             :cropper="imageCropper"
                             :show-glitch="showGlitch"
                             :get-cropper-data="getCropperData"
@@ -32,8 +31,8 @@
                     </button> -->
 
                     <!-- diff toggle -->
-                    <button v-tippy="{arrow: true, theme: 'mm'}"
-                            v-if="showDiffBtn()"
+                    <button v-if="showDiffBtn()"
+                            v-tippy="{arrow: true, theme: 'mm'}"
                             :disabled="processing && !imageDiffIsReady || showGlitch"
                             :class="{'is-active': showDiff}"
                             :title="trans('diff')"
