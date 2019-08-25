@@ -167,7 +167,7 @@ export default {
                     return this.showNotif(data.message, 'danger')
                 }
 
-                this.showNotif(`${this.trans('create_success')} "${data.new_folder_name}"at"${path || '/'}"`)
+                this.showNotif(`${this.trans('create_success')} "${data.new_folder_name}" at "${path || '/'}"`)
                 this.isBulkSelecting() ? this.blkSlct() : false
                 this.deleteCachedResponse(this.cacheName).then(() => {
                     this.getFiles(this.folders, data.new_folder_name)
@@ -219,7 +219,7 @@ export default {
 
                 let savedName = data.new_filename
 
-                this.showNotif(`${this.trans('rename_success')} "${filename}"to"${savedName}"`)
+                this.showNotif(`${this.trans('rename_success')} "${filename}" to "${savedName}"`)
                 selected.name = savedName
                 selected.path = selected.path.replace(filename, savedName)
 
@@ -277,12 +277,12 @@ export default {
 
                         // copy
                         if (copy) {
-                            this.showNotif(`${this.trans('copy_success')} "${item.name}"to"${destination}"`)
+                            this.showNotif(`${this.trans('copy_success')} "${item.name}" to "${destination}"`)
                         }
 
                         // move
                         else {
-                            this.showNotif(`${this.trans('move_success')} "${item.name}"to"${destination}"`)
+                            this.showNotif(`${this.trans('move_success')} "${item.name}" to "${destination}"`)
                             this.removeFromLists(item.name, item.type)
 
                             // update dirs list after move
