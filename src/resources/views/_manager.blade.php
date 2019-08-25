@@ -403,9 +403,7 @@
                                     <p class="control">
                                         <button class="button is-black" :disabled="!searchFor"
                                             v-tippy
-                                            title="{{ trans('MediaManager::messages.clear', [
-                                                'attr' => trans('MediaManager::messages.search.main')])
-                                            }}"
+                                            title="{{ trans('MediaManager::messages.clear', ['attr' => trans('MediaManager::messages.search.main')]) }}"
                                             @click="resetInput('searchFor')">
                                             <span class="icon"><icon name="times"></icon></span>
                                         </button>
